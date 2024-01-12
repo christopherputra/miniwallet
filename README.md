@@ -6,7 +6,7 @@ mini wallet app is an app that works as a virtual wallet. you can initiate your 
 3. View history transactions
 
 ### Assumption and Disclaimer
-1.** JWT TOKEN SIGNING - **I don't use standard Tokenization, instead I use JWT signing system to improve the flow and reduce processing time. Using the standard token verification that need to be stored in the database is not effective due to the need of database access in order to get the token for every matchup (eg. need to access the database everytime a request is made, best is using a caching db like Redis but still not effective). On the other hand, by using JWT token signing, Token are constructed of payload (any data  we want) that were encoded using a secret private key. So everytime a request is made the token only need to be decoded back using our private key, so no database access is needed. if the token is mutated or added by unauthorized user, the token will not be able to be decoded using our secret private key, hence considered Unauthorized. Moreover, JWT supports any payload added to the token, which in this case is the Wallet Id added to the payload. This is super effective and also secure compared to the standard token system.
+1.**JWT TOKEN SIGNING** I don't use standard Tokenization, instead I use JWT signing system to improve the flow and reduce processing time. Using the standard token verification that need to be stored in the database is not effective due to the need of database access in order to get the token for every matchup (eg. need to access the database everytime a request is made, best is using a caching db like Redis but still not effective). On the other hand, by using JWT token signing, Token are constructed of payload (any data  we want) that were encoded using a secret private key. So everytime a request is made the token only need to be decoded back using our private key, so no database access is needed. if the token is mutated or added by unauthorized user, the token will not be able to be decoded using our secret private key, hence considered Unauthorized. Moreover, JWT supports any payload added to the token, which in this case is the Wallet Id added to the payload. This is super effective and also secure compared to the standard token system.
 ### Brief Architecture - Service Based API
 [![ARCHITECTURE](https://i.imgur.com/lmNhenG.png "ARCHITECTURE")](https://i.imgur.com/lmNhenG.png "ARCHITECTURE")
 ### Stacks
@@ -61,7 +61,7 @@ Please install postgresql on your local following these steps https://www.postgr
 ## First Setup
 #### PostgreSQL Schema
 make `wallet` database
-run `schema.sql` on your postgres server to create all databases
+run `schema.sql` on your postgres server to create all tables
 ```sql
 DROP TABLE IF EXISTS wallets;
 CREATE TABLE wallets (
@@ -100,6 +100,7 @@ Change env fields based on your local env including postgres host, port, usernam
 ```
 #### Go Get Packages
 Please `go get <packages not yet installed>`
+
 ## You're Good To GO - Run Service
 on your console inside `/wallet` dir
 run go server using this command
